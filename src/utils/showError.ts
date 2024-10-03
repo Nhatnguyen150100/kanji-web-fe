@@ -1,0 +1,1 @@
+export default function showError(data: Record<string, any>, config: any) {}
