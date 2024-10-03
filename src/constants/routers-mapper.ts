@@ -5,10 +5,10 @@ const authRouter = {
   logout: `${_prefixSegment}/logout`,
 };
 
-const ROUTERS_DEFINE = {
+const DEFINE_ROUTERS = {
   home: '/',
   admin: '/admin',
   auth: authRouter,
   user: '/dashboard',
 };
-export default ROUTERS_DEFINE;
+export default DEFINE_ROUTERS;
