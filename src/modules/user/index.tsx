@@ -1,7 +1,8 @@
 import * as React from 'react';
+import TheLayout from '../../components/layout/TheLayout';
 
 interface IProps {}
 
 export default function UserPage({}: IProps) {
-  return <div>user page</div>;
+  return <TheLayout>user page</TheLayout>;
 }

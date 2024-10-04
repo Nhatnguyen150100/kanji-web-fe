@@ -2,7 +2,7 @@ const _prefixSegment = '/auth';
 
 const authRouter = {
   login: `${_prefixSegment}/login`,
-  logout: `${_prefixSegment}/logout`,
+  register: `${_prefixSegment}/register`,
 };
 
 const DEFINE_ROUTERS = {

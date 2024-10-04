@@ -2,16 +2,17 @@ import axios, { AxiosResponse } from 'axios';
 import cookiesStore from './cookiesStore';
 import ErrorCode from '../utils/errorCode';
 import showError from '../utils/showError';
+import DEFINE_ROUTERS from '../constants/routers-mapper';
 
 const API_URL: string | undefined = import.meta.env.VITE_BASE_URL;
 
-const clientRequest = axios.create({
+const axiosRequest = axios.create({
   baseURL: API_URL,
   withCredentials: false,
 });
 
-clientRequest.defaults.headers.put['Content-Type'] = 'application/json';
-clientRequest.defaults.headers.common['Authorization'] = cookiesStore.get(
+axiosRequest.defaults.headers.put['Content-Type'] = 'application/json';
+axiosRequest.defaults.headers.common['Authorization'] = cookiesStore.get(
   'access_token',
 )
   ? 'Bearer' + cookiesStore.get('access_token')
@@ -28,8 +29,8 @@ const onRejectResponse = (error: any) => {
 
   if (status === ErrorCode[401] || data.status === ErrorCode[401]) {
     cookiesStore.remove('access_token');
-    clientRequest.defaults.headers.common['Authorization'] = '';
-    location.href = '/login';
+    axiosRequest.defaults.headers.common['Authorization'] = '';
+    // location.href = DEFINE_ROUTERS.auth.login;
   }
   if (status === 400) {
     showError(data, config);
@@ -41,6 +42,6 @@ const onRejectResponse = (error: any) => {
   return Promise.reject(error);
 };
 
-clientRequest.interceptors.response.use(onFulFillResponse, onRejectResponse);
+axiosRequest.interceptors.response.use(onFulFillResponse, onRejectResponse);
 
-export default clientRequest;
+export default axiosRequest;

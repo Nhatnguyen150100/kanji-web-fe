@@ -1,4 +1,4 @@
-import { IErrorCode } from "../types/errorCode.type";
+import { IErrorCode } from "../types/errorCode.types";
 
 const ErrorCode: IErrorCode = {
   '401': 401,

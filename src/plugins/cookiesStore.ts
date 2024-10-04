@@ -1,2 +1,3 @@
 import Cookies from 'js-cookie';
-export default Cookies;
+const cookiesStore = Cookies;
+export default cookiesStore;
