@@ -6,6 +6,7 @@ import AdminPage from '../modules/admin';
 import LoginPage from '../modules/auth/login';
 import RegisterPage from '../modules/auth/register';
 import UserPage from '../modules/user';
+import ListKanjis from '../modules/user/list-kanjis';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,12 @@ const router = createBrowserRouter([
   {
     path: DEFINE_ROUTERS.user,
     element: <UserPage />,
+    children: [
+      {
+        path: `${DEFINE_ROUTERS.user}/list-kanjis`, 
+        element: <ListKanjis />
+      }
+    ]
   },
 ]);
 

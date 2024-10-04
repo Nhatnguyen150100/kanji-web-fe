@@ -13,7 +13,7 @@ const App: React.FC = () => {
       {!isLoggedIn ? (
         <Navigate to={DEFINE_ROUTERS.auth.login} replace />
       ) : (
-        <Navigate to={DEFINE_ROUTERS.user} replace />
+        <Navigate to={DEFINE_ROUTERS.listKanjis} replace />
       )}
     </>
   );

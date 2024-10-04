@@ -10,5 +10,6 @@ const DEFINE_ROUTERS = {
   admin: '/admin',
   auth: authRouter,
   user: '/dashboard',
+  listKanjis: '/dashboard/list-kanjis',
 };
 export default DEFINE_ROUTERS;

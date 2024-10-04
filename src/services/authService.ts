@@ -13,6 +13,15 @@ class AuthService {
       return Promise.reject(error);
     }
   }
+
+  public async register(data: ILogin): Promise<IBaseResponse<any>> {
+    try {
+      const rs = await axiosRequest.post(`${this._prefixURL}/register`, data);
+      return Promise.resolve(rs.data);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 }
 
 export default AuthService;
