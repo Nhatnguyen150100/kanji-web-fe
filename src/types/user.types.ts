@@ -6,7 +6,9 @@ export interface IUser {
   birthday: null;
   phoneNumber: null;
   email: string;
-  role: string;
+  role: IRole;
   createdAt: string;
   updatedAt: string;
 }
+
+export type IRole = 'USER' | 'ADMIN';

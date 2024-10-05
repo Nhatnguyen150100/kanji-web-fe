@@ -36,21 +36,21 @@ export default function KanjiDetail() {
             items={[
               {
                 title: (
-                  <a className="text-base" href={DEFINE_ROUTERS.listKanjis}>
+                  <a className="text-lg" href={DEFINE_ROUTERS.listKanjis}>
                     Kanji
                   </a>
                 ),
               },
               {
                 title: (
-                  <a href="#" className="text-base">
+                  <a href="#" className="text-lg">
                     {kanji?.character} - {kanji?.level}
                   </a>
                 ),
               },
             ]}
           />
-          <div className="flex flex-col justify-start items-start border-[2px] border-gray-300 border-dashed shadow-lg p-8 space-y-4 w-full rounded-lg">
+          <div className="flex flex-col justify-start items-start border-[2px] border-gray-300 border-dashed shadow-xl p-8 space-y-4 w-full rounded-lg">
             <div className="flex flex-row justify-center items-center w-full mb-5">
               <span className="ms-4 text-9xl">{kanji?.character}</span>
             </div>
@@ -79,7 +79,7 @@ export default function KanjiDetail() {
                   <span className="text-xl font-bold text-gray-800">
                     Level:
                   </span>
-                  {onChooseLevelKanji(kanji)}
+                  {onChooseLevelKanji(kanji?.level)}
                 </div>
               </div>
               <div className="flex flex-col justify-start items-start">

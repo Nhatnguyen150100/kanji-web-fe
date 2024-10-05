@@ -1,12 +1,15 @@
 import React from 'react';
-import { Outlet, Navigate } from 'react-router-dom';
+import { Outlet, Navigate, useLocation } from 'react-router-dom';
 import DEFINE_ROUTERS from '../constants/routers-mapper';
 import { RootState } from '../lib/store';
 import { useSelector } from 'react-redux';
+import cookiesStore from '../plugins/cookiesStore';
 
 const App: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
-  const isLoggedIn = user.id;
+  const isLoggedIn = Boolean(
+    user.id && user.role === 'USER' && cookiesStore.get('access_token'),
+  );
 
   return (
     <>

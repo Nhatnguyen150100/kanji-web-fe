@@ -15,6 +15,8 @@ import LevelN3Page from '../modules/user/level/level-n3';
 import LevelN2Page from '../modules/user/level/level-n2';
 import LevelN1Page from '../modules/user/level/level-n1';
 import KanjiDetail from '../modules/user/list-kanjis/kanji-detail';
+import LoginAdminPage from '../modules/admin/auth';
+import KanjiManager from '../modules/admin/kanji-manager/KanjiManager';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,16 @@ const router = createBrowserRouter([
   {
     path: DEFINE_ROUTERS.admin,
     element: <AdminPage />,
+    children: [
+      {
+        path: DEFINE_ROUTERS.kanjiManager,
+        element: <KanjiManager />,
+      },
+    ],
+  },
+  {
+    path: DEFINE_ROUTERS.loginAdmin,
+    element: <LoginAdminPage />,
   },
   {
     path: DEFINE_ROUTERS.user,

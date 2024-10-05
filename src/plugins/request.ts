@@ -2,7 +2,6 @@ import axios, { AxiosResponse } from 'axios';
 import cookiesStore from './cookiesStore';
 import ErrorCode from '../utils/errorCode';
 import showError from '../utils/showError';
-import DEFINE_ROUTERS from '../constants/routers-mapper';
 
 const API_URL: string | undefined = import.meta.env.VITE_BASE_URL;
 
@@ -30,14 +29,13 @@ const onRejectResponse = (error: any) => {
   if (status === ErrorCode[401] || data.status === ErrorCode[403]) {
     cookiesStore.remove('access_token');
     axiosRequest.defaults.headers.common['Authorization'] = '';
-    location.href = DEFINE_ROUTERS.auth.login;
+    // location.href = DEFINE_ROUTERS.auth.login;
     showError(data, config);
   }
   if (status === 400) {
     showError(data, config);
   }
   if (!error.response || error.response.status >= 500) {
-    console.log('🚀 ~ onRejectResponse ~ error.response:', error.response);
     return Promise.reject(error);
   }
   return Promise.reject(error);

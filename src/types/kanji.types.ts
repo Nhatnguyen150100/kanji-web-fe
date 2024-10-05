@@ -21,6 +21,7 @@ export interface IExampleKanjis {
 export interface IQueryKanji {
   page: number;
   limit: number;
+  total: number;
   nameLike: string;
   level: ILevelKanji;
 }

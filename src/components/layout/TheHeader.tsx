@@ -29,7 +29,7 @@ export default function TheHeader() {
         birthday: null,
         phoneNumber: null,
         email: '',
-        role: '',
+        role: 'USER',
         createdAt: '',
         updatedAt: '',
       }),

@@ -10,7 +10,7 @@ const initialState: IUser = {
   birthday: null,
   phoneNumber: null,
   email: '',
-  role: '',
+  role: 'USER',
   createdAt: '',
   updatedAt: '',
 };

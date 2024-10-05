@@ -1,3 +1,5 @@
+import { IRole } from './user.types';
+
 export interface ILogin {
   email: string;
   password: string;
@@ -11,7 +13,7 @@ export interface IResponseLogin {
   birthday: null;
   phoneNumber: null;
   email: string;
-  role: string;
+  role: IRole;
   createdAt: string;
   updatedAt: string;
   accessToken: string;

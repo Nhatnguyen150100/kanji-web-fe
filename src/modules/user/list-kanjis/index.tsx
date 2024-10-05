@@ -55,7 +55,7 @@ export default function ListKanjis({}: Props) {
                 });
               setQuery({ ...query, nameLike: value });
             }}
-            onSearch={handleGetListKanji}
+            onSearch={() => handleGetListKanji()}
           />
           <div className="flex flex-row justify-center items-start space-x-4 flex-wrap min-h-[400px]">
             {listKanji?.map((item) => (

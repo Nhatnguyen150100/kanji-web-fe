@@ -1,15 +1,17 @@
 import React from 'react';
-import { IKanji } from '../../types/kanji.types';
+import { IKanji, ILevelKanji } from '../../types/kanji.types';
 import TagN5 from '../../components/base/TagN5';
 import TagN4 from '../../components/base/TagN4';
 import TagN3 from '../../components/base/TagN3';
 import TagN2 from '../../components/base/TagN2';
 import TagN1 from '../../components/base/TagN1';
 
-export function onChooseLevelKanji(kanJi: IKanji | undefined): React.ReactNode {
-  if (!kanJi) return null;
+export function onChooseLevelKanji(
+  levelPram: ILevelKanji | undefined,
+): React.ReactNode {
+  if (!levelPram) return null;
   let level;
-  switch (kanJi.level) {
+  switch (levelPram) {
     case 'N5':
       level = <TagN5 level="N5" />;
       break;

@@ -11,7 +11,7 @@ export default function BaseDisplayKanji({ kanji, onClick }: IProps) {
   return (
     <div
       onClick={() => onClick(kanji)}
-      className="p-5 border-solid border-[1px] rounded-xl shadow-lg flex flex-row justify-start item-center min-h-40 w-[320px] transform-hover hover:cursor-pointer hover:border-blue-600 hover:border-2"
+      className="p-5 border-solid border-[1px] rounded-xl shadow-xl flex flex-row justify-start item-center min-h-40 w-[320px] transform-hover hover:cursor-pointer hover:border-blue-600 hover:border-2"
     >
       <span className="text-6xl flex items-center">{kanji.character}</span>
       <Divider

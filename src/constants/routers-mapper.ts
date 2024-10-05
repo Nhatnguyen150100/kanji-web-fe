@@ -8,6 +8,8 @@ const authRouter = {
 const DEFINE_ROUTERS = {
   home: '/',
   admin: '/admin',
+  kanjiManager: '/admin/kanji-manager',
+  loginAdmin: '/admin/auth/login',
   auth: authRouter,
   user: '/dashboard',
   listKanjis: '/dashboard/list-kanjis',
