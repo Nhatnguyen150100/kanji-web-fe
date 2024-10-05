@@ -9,12 +9,14 @@ const axiosRequest = axios.create({
   baseURL: API_URL,
   withCredentials: false,
 });
+const token = cookiesStore.get('access_token');
+console.log('Token from cookies:', token);
 
 axiosRequest.defaults.headers.put['Content-Type'] = 'application/json';
 axiosRequest.defaults.headers.common['Authorization'] = cookiesStore.get(
   'access_token',
 )
-  ? 'Bearer ' + cookiesStore.get('access_token')
+  ? 'Bearer ' + token
   : '';
 
 const onFulFillResponse = (
@@ -42,5 +44,12 @@ const onRejectResponse = (error: any) => {
 };
 
 axiosRequest.interceptors.response.use(onFulFillResponse, onRejectResponse);
+axiosRequest.interceptors.request.use((config) => {
+  const token = cookiesStore.get('access_token');
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+  return config;
+});
 
 export default axiosRequest;
