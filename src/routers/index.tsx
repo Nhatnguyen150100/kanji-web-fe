@@ -7,6 +7,13 @@ import LoginPage from '../modules/auth/login';
 import RegisterPage from '../modules/auth/register';
 import UserPage from '../modules/user';
 import ListKanjis from '../modules/user/list-kanjis';
+import TestsPage from '../modules/user/tests';
+import ProcessPage from '../modules/user/process';
+import LevelN5Page from '../modules/user/level/level-n5';
+import LevelN4Page from '../modules/user/level/level-n4';
+import LevelN3Page from '../modules/user/level/level-n3';
+import LevelN2Page from '../modules/user/level/level-n2';
+import LevelN1Page from '../modules/user/level/level-n1';
 
 const router = createBrowserRouter([
   {
@@ -31,10 +38,38 @@ const router = createBrowserRouter([
     element: <UserPage />,
     children: [
       {
-        path: `${DEFINE_ROUTERS.user}/list-kanjis`, 
-        element: <ListKanjis />
-      }
-    ]
+        path: `${DEFINE_ROUTERS.user}/list-kanjis`,
+        element: <ListKanjis />,
+      },
+      {
+        path: `${DEFINE_ROUTERS.tests}`,
+        element: <TestsPage />,
+      },
+      {
+        path: `${DEFINE_ROUTERS.process}`,
+        element: <ProcessPage />,
+      },
+      {
+        path: `${DEFINE_ROUTERS.levelN5}`,
+        element: <LevelN5Page />,
+      },
+      {
+        path: `${DEFINE_ROUTERS.levelN4}`,
+        element: <LevelN4Page />,
+      },
+      {
+        path: `${DEFINE_ROUTERS.levelN3}`,
+        element: <LevelN3Page />,
+      },
+      {
+        path: `${DEFINE_ROUTERS.levelN2}`,
+        element: <LevelN2Page />,
+      },
+      {
+        path: `${DEFINE_ROUTERS.levelN1}`,
+        element: <LevelN1Page />,
+      },
+    ],
   },
 ]);
 

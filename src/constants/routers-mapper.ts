@@ -11,5 +11,57 @@ const DEFINE_ROUTERS = {
   auth: authRouter,
   user: '/dashboard',
   listKanjis: '/dashboard/list-kanjis',
+  tests: '/dashboard/tests',
+  levelN5: '/dashboard/level-N5',
+  levelN4: '/dashboard/level-N4',
+  levelN3: '/dashboard/level-N3',
+  levelN2: '/dashboard/level-N2',
+  levelN1: '/dashboard/level-N1',
+  process: '/dashboard/process',
 };
+
+export const DEFINE_LIST_ROUTES_USER = {
+  kanji: {
+    name: 'Kanji',
+    route: DEFINE_ROUTERS.listKanjis,
+    subRoutes: [],
+  },
+  level: {
+    name: 'Level',
+    route: '#',
+    subRoutes: [
+      {
+        name: 'N5',
+        route: DEFINE_ROUTERS.levelN5,
+      },
+      {
+        name: 'N4',
+        route: DEFINE_ROUTERS.levelN4,
+      },
+      {
+        name: 'N3',
+        route: DEFINE_ROUTERS.levelN3,
+      },
+      {
+        name: 'N2',
+        route: DEFINE_ROUTERS.levelN2,
+      },
+      {
+        name: 'N1',
+        route: DEFINE_ROUTERS.levelN1,
+      },
+    ],
+  },
+  test: {
+    name: 'Test',
+    route: DEFINE_ROUTERS.tests,
+    subRoutes: [],
+  },
+  process: {
+    name: 'Process',
+    route: DEFINE_ROUTERS.process,
+    subRoutes: [],
+  },
+};
+
 export default DEFINE_ROUTERS;

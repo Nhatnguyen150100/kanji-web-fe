@@ -2,16 +2,22 @@ import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../lib/store';
 import { Avatar, Button, Divider, Popover } from 'antd';
-import { LogoutOutlined, ProfileOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  LogoutOutlined,
+  ProfileOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { setUser } from '../../lib/reducer/userSlice';
-import { useNavigate, useRoutes } from 'react-router-dom';
-import DEFINE_ROUTERS from '../../constants/routers-mapper';
+import { Link, useLocation, useNavigate, useRoutes } from 'react-router-dom';
+import DEFINE_ROUTERS, {
+  DEFINE_LIST_ROUTES_USER,
+} from '../../constants/routers-mapper';
 
 export default function TheHeader() {
-  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
+  const location = useLocation();
 
   const handleLogout = () => {
     dispatch(
@@ -29,10 +35,6 @@ export default function TheHeader() {
       }),
     );
     navigate(DEFINE_ROUTERS.auth.login);
-  };
-
-  const handleOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen);
   };
 
   const contentPopover = useMemo((): React.ReactNode => {
@@ -53,7 +55,8 @@ export default function TheHeader() {
             className="text-md text-gray-800 w-full flex justify-start font-medium border-none"
             onClick={handleLogout}
           >
-            <LogoutOutlined />Logout
+            <LogoutOutlined />
+            Logout
           </Button>
         </div>
       </>
@@ -75,12 +78,7 @@ export default function TheHeader() {
             </span>
           </a>
           <div className="flex items-center lg:order-2">
-            <Popover
-              content={contentPopover}
-              trigger="click"
-              open={open}
-              onOpenChange={handleOpenChange}
-            >
+            <Popover content={contentPopover} trigger="click">
               <a className="hover:cursor-pointer text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
                 <Avatar
                   className="me-3"
@@ -120,7 +118,9 @@ export default function TheHeader() {
                   fill-rule="evenodd"
                   d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                   clip-rule="evenodd"
-                ></path>
+                >
+                  {' '}
+                </path>
               </svg>
             </button>
           </div>
@@ -129,39 +129,63 @@ export default function TheHeader() {
             id="mobile-menu-2"
           >
             <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 mr-8 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white hover:text-white"
-                  aria-current="page"
-                >
-                  Kanji
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 mr-8 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Level
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 mr-8 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Test
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 mr-8 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Process
-                </a>
-              </li>
+              {Object.values(DEFINE_LIST_ROUTES_USER).map((item) => {
+                if (item?.subRoutes.length > 0) {
+                  return (
+                    <Popover
+                      content={
+                        <div className="flex flex-col justify-start items-center min-w-[80px]">
+                          {item?.subRoutes.map((subRoute) => (
+                            <Button
+                              key={subRoute.name}
+                              variant="text"
+                              color={`${
+                                subRoute.route === location.pathname
+                                  ? 'primary'
+                                  : 'default'
+                              }`}
+                              className="text-md text-gray-800 w-full flex justify-center font-medium border-none"
+                            >
+                              <Link to={subRoute.route}>{subRoute.name}</Link>
+                            </Button>
+                          ))}
+                        </div>
+                      }
+                      forceRender
+                      trigger="click"
+                    >
+                      <li key={item.name}>
+                        <Link
+                          to={item.route}
+                          className={`block py-2 px-4 mx-8 text-base font-medium text-gray-800 border-b border-gray-100 hover:bg-gray-50 ${
+                            item.subRoutes.some(
+                              (route) => route.route === location.pathname,
+                            )
+                              ? '!text-white font-bold'
+                              : ''
+                          } lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700`}
+                        >
+                          {item.name}
+                        </Link>
+                      </li>
+                    </Popover>
+                  );
+                }
+                return (
+                  <li key={item.name}>
+                    <Link
+                      to={item.route}
+                      className={`block py-2 px-4 mx-8 text-base font-medium text-gray-800 border-b border-gray-100 hover:bg-gray-50 ${
+                        item.route === location.pathname
+                          ? '!text-white font-bold'
+                          : ''
+                      } lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700`}
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
