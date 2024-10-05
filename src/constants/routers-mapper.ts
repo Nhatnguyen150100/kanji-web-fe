@@ -11,6 +11,7 @@ const DEFINE_ROUTERS = {
   auth: authRouter,
   user: '/dashboard',
   listKanjis: '/dashboard/list-kanjis',
+  kanjiDetail: '/dashboard/list-kanjis/:kanjiId',
   tests: '/dashboard/tests',
   levelN5: '/dashboard/level-N5',
   levelN4: '/dashboard/level-N4',

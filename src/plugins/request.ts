@@ -15,7 +15,7 @@ axiosRequest.defaults.headers.put['Content-Type'] = 'application/json';
 axiosRequest.defaults.headers.common['Authorization'] = cookiesStore.get(
   'access_token',
 )
-  ? 'Bearer' + cookiesStore.get('access_token')
+  ? 'Bearer ' + cookiesStore.get('access_token')
   : '';
 
 const onFulFillResponse = (
@@ -27,10 +27,11 @@ const onFulFillResponse = (
 const onRejectResponse = (error: any) => {
   const { config, data, status } = error.response;
 
-  if (status === ErrorCode[401] || data.status === ErrorCode[401]) {
+  if (status === ErrorCode[401] || data.status === ErrorCode[403]) {
     cookiesStore.remove('access_token');
     axiosRequest.defaults.headers.common['Authorization'] = '';
-    // location.href = DEFINE_ROUTERS.auth.login;
+    location.href = DEFINE_ROUTERS.auth.login;
+    showError(data, config);
   }
   if (status === 400) {
     showError(data, config);

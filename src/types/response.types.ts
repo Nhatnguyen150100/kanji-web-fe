@@ -1,9 +1,9 @@
 export interface IBaseResponse<T> {
-  data: T,
+  data: T;
   message: string;
 }
 
 export interface IBaseResponseList<T> {
-  content: T[];
+  content: T;
   totalCount: number;
 }

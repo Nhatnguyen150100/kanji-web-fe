@@ -14,6 +14,7 @@ import LevelN4Page from '../modules/user/level/level-n4';
 import LevelN3Page from '../modules/user/level/level-n3';
 import LevelN2Page from '../modules/user/level/level-n2';
 import LevelN1Page from '../modules/user/level/level-n1';
+import KanjiDetail from '../modules/user/list-kanjis/kanji-detail';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: `${DEFINE_ROUTERS.user}/list-kanjis`,
         element: <ListKanjis />,
+      },
+      {
+        path: `${DEFINE_ROUTERS.kanjiDetail}`,
+        element: <KanjiDetail />,
       },
       {
         path: `${DEFINE_ROUTERS.tests}`,

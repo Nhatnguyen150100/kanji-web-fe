@@ -40,3 +40,8 @@
 .read-the-docs {
   color: #888;
 }
+
+.transform-hover:hover {
+  transition-duration: 0.5s;
+  transform: scale(1.03);
+}
