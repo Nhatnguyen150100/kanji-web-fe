@@ -11,11 +11,11 @@ export default function BaseDisplayKanji({ kanji, onClick }: IProps) {
   return (
     <div
       onClick={() => onClick(kanji)}
-      className="p-5 border-solid border-[1px] rounded-xl shadow-xl flex flex-row justify-start item-center min-h-40 w-[320px] transform-hover hover:cursor-pointer hover:border-blue-600 hover:border-2"
+      className="p-5 border-solid border-[1px] rounded-xl shadow-xl flex flex-row justify-start item-center min-h-40 w-[380px] transform-hover hover:cursor-pointer hover:border-blue-600 hover:border-2"
     >
       <span className="text-6xl flex items-center">{kanji.character}</span>
       <Divider
-        className="h-[80px] ms-5 flex items-center justify-center"
+        className="h-[100px] ms-5 flex items-center justify-center"
         style={{ borderInlineStart: '2px solid rgba(5, 5, 5, 0.06)' }}
         plain
         variant="solid"
@@ -26,12 +26,20 @@ export default function BaseDisplayKanji({ kanji, onClick }: IProps) {
           Meaning: <span className="font-normal text-sm">{kanji.meaning}</span>
         </span>
         <span className="font-semibold text-md">
+          Kanji radicals:{' '}
+          <span className="font-normal text-sm">{kanji.chinaMeaning}</span>
+        </span>
+        <span className="font-semibold text-md">
           Mnemonic:
           <span className="font-normal text-sm ms-1">{kanji.mnemonic}</span>
         </span>
         <span className="font-semibold text-md">
-          Reading:
-          <span className="font-normal text-sm ms-1">{kanji.reading}</span>
+          Kunyomi:
+          <span className="font-normal text-sm ms-1">{kanji.kunReading}</span>
+        </span>
+        <span className="font-semibold text-md">
+          Onyomi:
+          <span className="font-normal text-sm ms-1">{kanji.onReading}</span>
         </span>
       </div>
     </div>

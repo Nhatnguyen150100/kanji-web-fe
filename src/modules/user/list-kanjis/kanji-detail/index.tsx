@@ -65,24 +65,36 @@ export default function KanjiDetail() {
                 </div>
                 <div className="flex flex-row justify-start items-start">
                   <span className="text-xl font-bold text-gray-800">
+                    Kanji radicals:
+                  </span>
+                  <span className="text-xl ms-3">{kanji?.chinaMeaning}</span>
+                </div>
+                <div className="flex flex-row justify-start items-start">
+                  <span className="text-xl font-bold text-gray-800">
+                    Onyomi:
+                  </span>
+                  <span className="text-xl ms-3">{kanji?.onReading}</span>
+                </div>
+                <div className="flex flex-row justify-start items-start">
+                  <span className="text-xl font-bold text-gray-800">
+                    Kunyomi:
+                  </span>
+                  <span className="text-xl ms-3">{kanji?.kunReading}</span>
+                </div>
+                <div className="flex flex-row justify-start items-start">
+                  <span className="text-xl font-bold text-gray-800">
                     Mnemonic:
                   </span>
                   <span className="text-xl ms-3">{kanji?.mnemonic}</span>
                 </div>
-                <div className="flex flex-row justify-start items-start">
-                  <span className="text-xl font-bold text-gray-800">
-                    Reading:
-                  </span>
-                  <span className="text-xl ms-3">{kanji?.reading}</span>
-                </div>
+              </div>
+              <div className="flex flex-col justify-start items-start space-y-3">
                 <div className="flex flex-row justify-start items-start">
                   <span className="text-xl font-bold text-gray-800">
                     Level:
                   </span>
                   {onChooseLevelKanji(kanji?.level)}
                 </div>
-              </div>
-              <div className="flex flex-col justify-start items-start">
                 <span className="text-xl font-bold text-gray-800">
                   Example:
                 </span>

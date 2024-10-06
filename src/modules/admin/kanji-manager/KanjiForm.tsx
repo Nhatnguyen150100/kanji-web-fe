@@ -26,8 +26,10 @@ type FieldType = {
   character?: string;
   level?: ILevelKanji;
   meaning?: string;
+  chinaMeaning?: string;
   mnemonic?: string;
-  reading?: string;
+  kunReading?: string;
+  onReading?: string;
 };
 
 interface IExample {
@@ -115,8 +117,10 @@ export default function KanjiForm({
             character: kanji?.character,
             level: kanji?.level ?? 'N5',
             meaning: kanji?.meaning,
+            chinaMeaning: kanji?.chinaMeaning,
             mnemonic: kanji?.mnemonic,
-            reading: kanji?.reading,
+            onReading: kanji?.onReading,
+            kunReading: kanji?.kunReading,
           }}
           autoComplete="off"
         >
@@ -142,14 +146,37 @@ export default function KanjiForm({
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item<FieldType> label="Meaning" name="meaning">
-            <Input />
-          </Form.Item>
-          <Form.Item<FieldType> label="Mnemonic" name="mnemonic">
+          <Form.Item<FieldType>
+            label="Kanji radicals"
+            name="chinaMeaning"
+            rules={[{ required: true, message: 'Please input kanji radicals' }]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item<FieldType> label="Reading" name="reading">
+          <Form.Item<FieldType>
+            label="Onyomi"
+            name="onReading"
+            rules={[{ required: true, message: 'Please input Onyomi reading' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item<FieldType>
+            label="Kunyomi"
+            name="kunReading"
+            rules={[
+              { required: true, message: 'Please input Kunyomi reading' },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item<FieldType> label="Meaning" name="meaning">
+            <Input />
+          </Form.Item>
+
+          <Form.Item<FieldType> label="Mnemonic" name="mnemonic">
             <Input />
           </Form.Item>
 

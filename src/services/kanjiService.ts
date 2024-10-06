@@ -50,6 +50,15 @@ class KanjiService {
       return Promise.reject(error);
     }
   }
+
+  public async deleteKanji(id: string): Promise<IBaseResponse<any>> {
+    try {
+      const rs = await axiosRequest.delete(`${this._prefixURL}/${id}`);
+      return Promise.resolve(rs.data);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 }
 
 export default KanjiService;

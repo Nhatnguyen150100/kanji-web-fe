@@ -3,8 +3,10 @@ export interface IKanji {
   character: string;
   level: ILevelKanji;
   meaning: string;
+  chinaMeaning: string;
   mnemonic: string;
-  reading: string;
+  onReading: string;
+  kunReading: string;
   createdAt: string;
   updatedAt: string;
   exampleKanjis: IExampleKanjis[];
