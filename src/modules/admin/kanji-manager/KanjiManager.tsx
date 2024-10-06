@@ -19,7 +19,7 @@ import KanjiForm from './KanjiForm';
 export default function KanjiManager() {
   const [query, setQuery] = useState<Partial<IQueryKanji>>({
     page: 1,
-    limit: 6,
+    limit: 5,
     nameLike: '',
   });
   const [listKanji, setListKanji] = useState<IKanji[]>([]);

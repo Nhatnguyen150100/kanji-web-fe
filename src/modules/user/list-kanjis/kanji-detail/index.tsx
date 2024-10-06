@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { IKanji } from '../../../../types/kanji.types';
 import { kanjiService } from '../../../../services';
 import { Breadcrumb, Divider, Spin, Tag } from 'antd';
@@ -10,6 +10,7 @@ export default function KanjiDetail() {
   const { kanjiId } = useParams<{ kanjiId: string }>();
   const [kanji, setKanji] = useState<IKanji>();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleGetListKanji = async () => {
     try {
@@ -36,7 +37,7 @@ export default function KanjiDetail() {
             items={[
               {
                 title: (
-                  <a className="text-lg" href={DEFINE_ROUTERS.listKanjis}>
+                  <a className="text-lg" onClick={() => navigate(-1)}>
                     Kanji
                   </a>
                 ),

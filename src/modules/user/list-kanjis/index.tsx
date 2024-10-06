@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { kanjiService } from '../../../services';
 import { IKanji, IQueryKanji } from '../../../types/kanji.types';
-import { Spin } from 'antd';
+import { Empty, Spin } from 'antd';
 import BaseDisplayKanji from '../../../components/base/BaseDisplayKanji';
 import _ from 'lodash';
 import BaseSearch from '../../../components/base/BaseSearch';
@@ -58,6 +58,7 @@ export default function ListKanjis({}: Props) {
             onSearch={() => handleGetListKanji()}
           />
           <div className="flex flex-row justify-center items-start space-x-4 flex-wrap min-h-[400px]">
+            {listKanji.length === 0 && <Empty />}
             {listKanji?.map((item) => (
               <BaseDisplayKanji
                 key={item.id}
