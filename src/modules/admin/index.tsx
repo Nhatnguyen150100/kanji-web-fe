@@ -18,7 +18,7 @@ export default function AdminPage({}: IProps) {
       ) : (
         <div className="h-full w-full flex flex-row">
           <SideBar />
-          <div className="p-10 w-full">
+          <div className="p-10 w-full max-h-[100vh] overflow-y-auto">
             <Outlet />
           </div>
         </div>

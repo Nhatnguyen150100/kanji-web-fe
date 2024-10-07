@@ -56,6 +56,11 @@ export interface IExamRequest {
 export interface IQuestionRequest {
   content: string;
   order: number;
-  options: string[];
+  options: IOptionsLocal[];
   correctAnswer: string;
+}
+
+export interface IOptionsLocal {
+  id: number,
+  option: string,
 }
