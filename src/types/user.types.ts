@@ -1,9 +1,9 @@
 export interface IUser {
   id: string;
-  username: null;
+  userName: null;
   fullName: null;
   gender: null;
-  birthday: null;
+  birthDay: null;
   phoneNumber: null;
   email: string;
   role: IRole;

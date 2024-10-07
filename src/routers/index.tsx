@@ -17,6 +17,7 @@ import LevelN1Page from '../modules/user/level/level-n1';
 import KanjiDetail from '../modules/user/list-kanjis/kanji-detail';
 import LoginAdminPage from '../modules/admin/auth';
 import KanjiManager from '../modules/admin/kanji-manager/KanjiManager';
+import Profile from '../modules/user/profile/Profile';
 
 const router = createBrowserRouter([
   {
@@ -55,35 +56,39 @@ const router = createBrowserRouter([
         element: <ListKanjis />,
       },
       {
-        path: `${DEFINE_ROUTERS.kanjiDetail}`,
+        path: DEFINE_ROUTERS.profile,
+        element: <Profile />,
+      },
+      {
+        path: DEFINE_ROUTERS.kanjiDetail,
         element: <KanjiDetail />,
       },
       {
-        path: `${DEFINE_ROUTERS.tests}`,
+        path: DEFINE_ROUTERS.tests,
         element: <TestsPage />,
       },
       {
-        path: `${DEFINE_ROUTERS.process}`,
+        path: DEFINE_ROUTERS.process,
         element: <ProcessPage />,
       },
       {
-        path: `${DEFINE_ROUTERS.levelN5}`,
+        path: DEFINE_ROUTERS.levelN5,
         element: <LevelN5Page />,
       },
       {
-        path: `${DEFINE_ROUTERS.levelN4}`,
+        path: DEFINE_ROUTERS.levelN4,
         element: <LevelN4Page />,
       },
       {
-        path: `${DEFINE_ROUTERS.levelN3}`,
+        path: DEFINE_ROUTERS.levelN3,
         element: <LevelN3Page />,
       },
       {
-        path: `${DEFINE_ROUTERS.levelN2}`,
+        path: DEFINE_ROUTERS.levelN2,
         element: <LevelN2Page />,
       },
       {
-        path: `${DEFINE_ROUTERS.levelN1}`,
+        path: DEFINE_ROUTERS.levelN1,
         element: <LevelN1Page />,
       },
     ],

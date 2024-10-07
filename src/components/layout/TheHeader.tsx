@@ -23,10 +23,10 @@ export default function TheHeader() {
     dispatch(
       setUser({
         id: '',
-        username: null,
+        userName: null,
         fullName: null,
         gender: null,
-        birthday: null,
+        birthDay: null,
         phoneNumber: null,
         email: '',
         role: 'USER',
@@ -45,6 +45,7 @@ export default function TheHeader() {
             variant="text"
             color="default"
             className="text-md text-gray-800 w-full flex justify-start font-medium border-none"
+            onClick={() => navigate(DEFINE_ROUTERS.profile)}
           >
             <ProfileOutlined /> Profile
           </Button>
@@ -67,7 +68,7 @@ export default function TheHeader() {
     <header>
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <a href="#" className="flex items-center">
+          <a href={DEFINE_ROUTERS.home} className="flex items-center">
             <img
               src="https://flowbite.com/docs/images/logo.svg"
               className="mr-3 h-6 sm:h-9"
@@ -85,7 +86,7 @@ export default function TheHeader() {
                   style={{ backgroundColor: '#00aaff' }}
                   icon={<UserOutlined />}
                 />
-                {user.email}
+                {user.fullName ?? user.email}
               </a>
             </Popover>
             <button

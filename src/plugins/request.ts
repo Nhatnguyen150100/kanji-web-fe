@@ -10,7 +10,6 @@ const axiosRequest = axios.create({
   withCredentials: false,
 });
 const token = cookiesStore.get('access_token');
-console.log('Token from cookies:', token);
 
 axiosRequest.defaults.headers.put['Content-Type'] = 'application/json';
 axiosRequest.defaults.headers.common['Authorization'] = cookiesStore.get(

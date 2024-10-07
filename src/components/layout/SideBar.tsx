@@ -92,10 +92,10 @@ const Sidebar = () => {
     dispatch(
       setUser({
         id: '',
-        username: null,
+        userName: null,
         fullName: null,
         gender: null,
-        birthday: null,
+        birthDay: null,
         phoneNumber: null,
         email: '',
         role: 'ADMIN',

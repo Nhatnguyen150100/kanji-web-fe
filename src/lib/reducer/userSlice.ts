@@ -4,10 +4,10 @@ import { IUser } from '../../types/user.types';
 
 const initialState: IUser = {
   id: '',
-  username: null,
+  userName: null,
   fullName: null,
   gender: null,
-  birthday: null,
+  birthDay: null,
   phoneNumber: null,
   email: '',
   role: 'USER',
