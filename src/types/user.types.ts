@@ -11,4 +11,11 @@ export interface IUser {
   updatedAt: string;
 }
 
+export interface IQueryUser {
+  page: number;
+  limit: number;
+  total: number;
+  nameLike: string;
+}
+
 export type IRole = 'USER' | 'ADMIN';

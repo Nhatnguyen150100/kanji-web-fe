@@ -1,13 +1,12 @@
-import { Button, Form, Input } from 'antd';
+import { Input } from 'antd';
 import * as React from 'react';
 import { toast } from 'react-toastify';
 import { authService } from '../../../services';
 import { useDispatch, useSelector } from 'react-redux';
 import cookiesStore from '../../../plugins/cookiesStore';
 import { RootState } from '../../../lib/store';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import DEFINE_ROUTERS from '../../../constants/routers-mapper';
-import { setAdmin } from '../../../lib/reducer/adminSlice';
 import { setUser } from '../../../lib/reducer/userSlice';
 
 export default function LoginAdminPage() {
@@ -46,7 +45,7 @@ export default function LoginAdminPage() {
   return (
     <>
       {isLoggedIn ? (
-        <Navigate to={DEFINE_ROUTERS.kanjiManager} replace />
+        <Navigate to={DEFINE_ROUTERS.dashboard} replace />
       ) : (
         <div className="flex h-full w-full justify-center items-center">
           <section className="h-full">

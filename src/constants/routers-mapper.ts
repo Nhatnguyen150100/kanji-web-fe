@@ -9,6 +9,8 @@ const DEFINE_ROUTERS = {
   home: '/',
   admin: '/admin',
   kanjiManager: '/admin/kanji-manager',
+  dashboard: '/admin/dashboard',
+  accountManager: '/admin/account-manager',
   loginAdmin: '/admin/auth/login',
   auth: authRouter,
   user: '/dashboard',

@@ -18,6 +18,8 @@ import KanjiDetail from '../modules/user/list-kanjis/kanji-detail';
 import LoginAdminPage from '../modules/admin/auth';
 import KanjiManager from '../modules/admin/kanji-manager/KanjiManager';
 import Profile from '../modules/user/profile/Profile';
+import AccountManager from '../modules/admin/account-manager/AccountManager';
+import DashBoard from '../modules/admin/dashboard/DashBoard';
 
 const router = createBrowserRouter([
   {
@@ -38,8 +40,16 @@ const router = createBrowserRouter([
     element: <AdminPage />,
     children: [
       {
+        path: DEFINE_ROUTERS.dashboard,
+        element: <DashBoard />,
+      },
+      {
         path: DEFINE_ROUTERS.kanjiManager,
         element: <KanjiManager />,
+      },
+      {
+        path: DEFINE_ROUTERS.accountManager,
+        element: <AccountManager />,
       },
     ],
   },
