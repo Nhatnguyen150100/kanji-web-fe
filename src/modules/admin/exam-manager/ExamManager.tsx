@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { IKanji, ILevelKanji, IQueryKanji } from '../../../types/kanji.types';
-import { kanjiService } from '../../../services';
+import { accountService, examService, kanjiService } from '../../../services';
 import {
   Button,
   Modal,
@@ -10,92 +10,93 @@ import {
   Table,
   TableProps,
 } from 'antd';
-import { onChooseLevelKanji } from '../../../utils/functions/on-choose-level-kanji';
 import BaseSearch from '../../../components/base/BaseSearch';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { formatDate } from '../../../utils/functions/format-date';
-import KanjiForm from './KanjiForm';
+import { IExam, IQueryExam } from '../../../types/exam.types';
+import { onChooseLevelKanji } from '../../../utils/functions/on-choose-level-kanji';
+import { useNavigate } from 'react-router-dom';
+import DEFINE_ROUTERS from '../../../constants/routers-mapper';
 
-export default function KanjiManager() {
-  const [query, setQuery] = useState<Partial<IQueryKanji>>({
+export default function ExamManager() {
+  const [query, setQuery] = useState<Partial<IQueryExam>>({
     page: 1,
     limit: 5,
     nameLike: '',
   });
-  const [listKanji, setListKanji] = useState<IKanji[]>([]);
+  const [examList, setExamList] = useState<IExam[]>([]);
   const [loading, setLoading] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [updateKanji, setUpdateKanji] = useState<IKanji>();
+  const navigate = useNavigate();
 
-  const handleDeleteKanji = (kanji: IKanji) => {
+  const handleDeleteExam = (exam: IExam) => {
     Modal.confirm({
-      title: 'Are you sure you want to delete this kanji?',
-      content: `Kanji: ${kanji.character}`,
+      title: 'Are you sure you want to delete this exam?',
+      content: `Exam: ${exam.name}`,
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
       onOk: async () => {
         try {
-          const rs = await kanjiService.deleteKanji(kanji.id);
+          const rs = await examService.deleteExam(exam.id);
           notification.success({
             message: 'Success',
             description: rs.message,
           });
-          handleGetListKanji();
+          handleGetExamList();
         } catch (error) {
           notification.error({
             message: 'Error',
-            description: 'Failed to delete kanji.',
+            description: 'Failed to delete exam.',
           });
         }
       },
     });
   };
 
-  const columns: TableProps<IKanji>['columns'] = [
+  const columns: TableProps<IExam>['columns'] = [
     {
       title: 'Index',
       dataIndex: 'index',
       render: (_, __, index) => index + 1,
     },
     {
-      title: 'Character',
-      dataIndex: 'character',
-      key: 'character',
-      render: (text) => <span className="text-2xl font-semibold">{text}</span>,
+      title: 'Name of exam',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text) => <span className="text-xl font-semibold">{text}</span>,
     },
     {
-      title: 'Kanji radicals',
-      dataIndex: 'chinaMeaning',
-      key: 'chinaMeaning',
-      render: (text) => <span className="text-lg font-semibold">{text}</span>,
-    },
-    {
-      title: 'Meaning',
-      key: 'meaning',
-      dataIndex: 'meaning',
-    },
-    {
-      title: 'Level',
+      title: 'Level of exam',
       key: 'level',
       dataIndex: 'level',
       render: (level) => onChooseLevelKanji(level),
     },
     {
-      title: 'Created at',
+      title: 'Time finish',
+      key: 'timeFinish',
+      dataIndex: 'timeFinish',
+      render: (text) => <span className="font-semibold">{text} minutes</span>,
+    },
+    {
+      title: 'Description',
+      key: 'description',
+      dataIndex: 'description',
+      render: (text) => <span className="font-normal">{text} minutes</span>,
+    },
+    {
+      title: 'Created date',
       key: 'createdAt',
       dataIndex: 'createdAt',
       render: (createdAt) => <span>{formatDate(createdAt)}</span>,
     },
     {
-      title: 'Delete kanji',
-      key: 'deleteKanji',
-      dataIndex: 'deleteKanji',
-      render: (_, kanji: IKanji) => (
+      title: 'Delete exam',
+      key: 'deleteExam',
+      render: (_, exam: IExam) => (
         <Button
           onClick={(e) => {
             e.stopPropagation();
-            handleDeleteKanji(kanji);
+            handleDeleteExam(exam);
           }}
           className="ms-3"
           variant="solid"
@@ -107,12 +108,12 @@ export default function KanjiManager() {
     },
   ];
 
-  const handleGetListKanji = async (queryParam = query) => {
+  const handleGetExamList = async (queryParam = query) => {
     try {
       setLoading(true);
       delete queryParam.total;
-      const rs = await kanjiService.listKanji(queryParam);
-      setListKanji(rs.data.content);
+      const rs = await examService.getExamList(queryParam);
+      setExamList(rs.data.content);
       setQuery((pre) => ({
         ...pre,
         total: rs.data.totalCount,
@@ -123,63 +124,45 @@ export default function KanjiManager() {
   };
 
   useEffect(() => {
-    handleGetListKanji();
+    handleGetExamList();
   }, []);
-
-  const handleClickRow = (kanji: IKanji) => {
-    setUpdateKanji(kanji);
-    setModalVisible(true);
-  };
-
-  const handleCancel = () => {
-    setUpdateKanji(undefined);
-    setModalVisible(false);
-  };
-
-  const handleOk = () => {
-    handleCancel();
-    handleGetListKanji();
-  };
 
   return (
     <div className="flex flex-col justify-start items-center space-y-5">
-      <h1 className="font-bold text-3xl">KanJi Manager</h1>
+      <h1 className="font-bold text-3xl">Exam Manager</h1>
       <div className="flex flex-row justify-between items-center w-full">
         <BaseSearch
           value={query.nameLike!}
           placeholder="Input search text"
           onHandleChange={(value) => {
             if (!value)
-              handleGetListKanji({
+              handleGetExamList({
                 page: query.page,
                 limit: query.limit,
               });
             setQuery({ ...query, nameLike: value });
           }}
-          onSearch={() => handleGetListKanji()}
+          onSearch={() => handleGetExamList()}
         />
         <Button
           type="primary"
           icon={<PlusOutlined />}
           iconPosition="start"
           onClick={() => {
-            setModalVisible(true);
+            navigate(DEFINE_ROUTERS.newExam)
           }}
         >
-          Add new kanji
+          Add new exam
         </Button>
       </div>
       {loading ? (
         <Spin />
       ) : (
         <div className="w-full">
-          <Table<IKanji>
+          <Table<IExam>
             rowKey="id"
             columns={columns}
-            dataSource={listKanji}
-            onRow={(record) => ({
-              onClick: () => handleClickRow(record),
-            })}
+            dataSource={examList}
             pagination={{
               current: query.page,
               pageSize: query.limit,
@@ -190,7 +173,7 @@ export default function KanjiManager() {
                   page,
                   limit,
                 }));
-                handleGetListKanji({
+                handleGetExamList({
                   ...query,
                   page,
                   limit,
@@ -198,14 +181,6 @@ export default function KanjiManager() {
               },
             }}
           />
-          {modalVisible && (
-            <KanjiForm
-              kanji={updateKanji}
-              modalVisible={modalVisible}
-              handleOk={handleOk}
-              handleCancel={handleCancel}
-            />
-          )}
         </div>
       )}
     </div>

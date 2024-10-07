@@ -20,6 +20,9 @@ import KanjiManager from '../modules/admin/kanji-manager/KanjiManager';
 import Profile from '../modules/user/profile/Profile';
 import AccountManager from '../modules/admin/account-manager/AccountManager';
 import DashBoard from '../modules/admin/dashboard/DashBoard';
+import ExamManager from '../modules/admin/exam-manager/ExamManager';
+import ExamDetail from '../modules/admin/exam-manager/ExamDetail';
+import NewExam from '../modules/admin/exam-manager/NewExam';
 
 const router = createBrowserRouter([
   {
@@ -42,6 +45,18 @@ const router = createBrowserRouter([
       {
         path: DEFINE_ROUTERS.dashboard,
         element: <DashBoard />,
+      },
+      {
+        path: DEFINE_ROUTERS.examManager,
+        element: <ExamManager />,
+      },
+      {
+        path: DEFINE_ROUTERS.newExam,
+        element: <NewExam />,
+      },
+      {
+        path: DEFINE_ROUTERS.examDetail,
+        element: <ExamDetail />,
       },
       {
         path: DEFINE_ROUTERS.kanjiManager,

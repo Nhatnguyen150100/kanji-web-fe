@@ -36,7 +36,6 @@ export default function DashBoard() {
       ],
     };
   }, [listLog]);
-  console.log('🚀 ~ chartData ~ chartData:', chartData);
 
   const options = {
     scales: {

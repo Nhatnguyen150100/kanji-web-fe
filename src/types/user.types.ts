@@ -4,7 +4,7 @@ export interface IUser {
   fullName: null;
   gender: null;
   birthDay: null;
-  phoneNumber: null;
+  phoneNumber: number | null;
   email: string;
   role: IRole;
   createdAt: string;

@@ -3,7 +3,26 @@ import DEFINE_ROUTERS from '../../constants/routers-mapper';
 import { useDispatch } from 'react-redux';
 import cookiesStore from '../../plugins/cookiesStore';
 import { setUser } from '../../lib/reducer/userSlice';
-import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import {
+  EditOutlined,
+  FormOutlined,
+  UnorderedListOutlined,
+} from '@ant-design/icons';
+
+const isChildUrl = (parentUrl: string, childUrl: string): boolean => {
+  // không tính trường hợp là / vì luôn là parentUrl
+  if (parentUrl === '/') return false;
+  let compareParentUrl: string = parentUrl;
+  let compareChildUrl: string = childUrl;
+
+  if (!compareParentUrl.endsWith('/')) {
+    compareParentUrl += '/';
+  }
+  if (!compareChildUrl.endsWith('/')) {
+    compareChildUrl += '/';
+  }
+  return compareChildUrl.startsWith(compareParentUrl);
+};
 
 const routes = [
   {
@@ -26,7 +45,7 @@ const routes = [
     path: DEFINE_ROUTERS.kanjiManager,
     name: 'Kanjis',
     icon: (
-      <EditOutlined className="text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"/>
+      <EditOutlined className="text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
     ),
   },
   {
@@ -36,21 +55,13 @@ const routes = [
       <UnorderedListOutlined className="text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
     ),
   },
-  // {
-  //   path: '/users',
-  //   name: 'Users',
-  //   icon: (
-  //     <svg
-  //       className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-  //       aria-hidden="true"
-  //       xmlns="http://www.w3.org/2000/svg"
-  //       fill="currentColor"
-  //       viewBox="0 0 18 20"
-  //     >
-  //       <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
-  //     </svg>
-  //   ),
-  // },
+  {
+    path: DEFINE_ROUTERS.examManager,
+    name: 'Exam',
+    icon: (
+      <FormOutlined className="text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+    ),
+  },
   // {
   //   path: '/products',
   //   name: 'Products',
@@ -105,13 +116,15 @@ const Sidebar = () => {
               <Link
                 to={route.path}
                 className={`flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${
-                  location.pathname === route.path && 'bg-gray-700 text-white'
+                  isChildUrl(route.path, location.pathname) &&
+                  'bg-gray-700 text-white'
                 }`}
               >
                 {route.icon}
                 <span
                   className={`ms-3 ${
-                    location.pathname === route.path && 'font-bold text-lg'
+                    isChildUrl(route.path, location.pathname) &&
+                    'font-bold text-lg'
                   }`}
                 >
                   {route.name}

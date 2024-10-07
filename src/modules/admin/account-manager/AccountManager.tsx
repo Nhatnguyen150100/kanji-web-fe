@@ -51,6 +51,11 @@ export default function AccountManager() {
 
   const columns: TableProps<IUser>['columns'] = [
     {
+      title: 'Index',
+      dataIndex: 'index',
+      render: (_, __, index) => index + 1,
+    },
+    {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
@@ -142,7 +147,7 @@ export default function AccountManager() {
               });
             setQuery({ ...query, nameLike: value });
           }}
-          onSearch={handleGetAccountList}
+          onSearch={() => handleGetAccountList()}
         />
       </div>
       {loading ? (
