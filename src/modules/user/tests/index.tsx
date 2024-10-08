@@ -1,23 +1,19 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { IKanji, ILevelKanji, IQueryKanji } from '../../../types/kanji.types';
-import { accountService, examService, kanjiService } from '../../../services';
+import { ILevelKanji } from '../../../types/kanji.types';
+import { examService } from '../../../services';
 import {
   Button,
-  Modal,
-  notification,
-  Pagination,
   Radio,
   Spin,
   Table,
   TableProps,
 } from 'antd';
 import BaseSearch from '../../../components/base/BaseSearch';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 import { formatDate } from '../../../utils/functions/format-date';
 import { IExam, IQueryExam } from '../../../types/exam.types';
 import { onChooseLevelKanji } from '../../../utils/functions/on-choose-level-kanji';
 import { useNavigate } from 'react-router-dom';
-import DEFINE_ROUTERS from '../../../constants/routers-mapper';
 import Visibility from '../../../components/base/visibility';
 
 export default function TestsPage() {

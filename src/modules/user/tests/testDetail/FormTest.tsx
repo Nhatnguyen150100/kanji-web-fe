@@ -7,10 +7,7 @@ import {
   CloseOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import {
-  IExamDetail,
-  IQuestion,
-} from '../../../../types/exam.types';
+import { IExamDetail, IQuestion } from '../../../../types/exam.types';
 import { onChooseLevelKanji } from '../../../../utils/functions/on-choose-level-kanji';
 import { ILevelKanji } from '../../../../types/kanji.types';
 import Visibility from '../../../../components/base/visibility';
@@ -91,8 +88,8 @@ export default function FormTest({ examProps }: IProps) {
       const rs = await testService.saveScore({
         idUser: user.id,
         idExam: examProps.id,
-        score,
-      })
+        score: calculateScore(score!, listQuestions.length),
+      });
       setCurrentOrder(STARTED_QUESTION_DEFAULT);
       setIsStartTest(false);
       setScore(score);
