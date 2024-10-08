@@ -123,6 +123,10 @@ export default function ExamManager() {
     }
   };
 
+  const handleClickRow = (exam: IExam) => {
+    navigate(`/admin/exam-manager/${exam.id}`);
+  };
+
   useEffect(() => {
     handleGetExamList();
   }, []);
@@ -149,7 +153,7 @@ export default function ExamManager() {
           icon={<PlusOutlined />}
           iconPosition="start"
           onClick={() => {
-            navigate(DEFINE_ROUTERS.newExam)
+            navigate(DEFINE_ROUTERS.newExam);
           }}
         >
           Add new exam
@@ -163,6 +167,9 @@ export default function ExamManager() {
             rowKey="id"
             columns={columns}
             dataSource={examList}
+            onRow={(record) => ({
+              onClick: () => handleClickRow(record),
+            })}
             pagination={{
               current: query.page,
               pageSize: query.limit,

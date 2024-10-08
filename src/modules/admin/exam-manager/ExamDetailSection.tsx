@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import {
   IExamDetail,
+  IOptionsLocal,
   IQuestionRequest,
   TExamInfo,
 } from '../../../types/exam.types';
@@ -12,16 +13,24 @@ import {
   DeleteOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
+import Visibility from '../../../components/base/visibility';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { examService } from '../../../services';
+import GeneralLoading from '../../../components/base/GeneralLoading';
 
 interface IProps {
   examProps?: IExamDetail;
 }
 
+const STARTED_QUESTION_DEFAULT = 1;
+
 export default function ExamDetailSection({ examProps }: IProps) {
+  const navigate = useNavigate();
   const [examInfo, setExamInfo] = useState<TExamInfo>({
     name: examProps?.name ?? '',
     level: examProps?.level ?? 'N5',
-    timeFinish: examProps?.timeFinish ?? 0,
+    timeFinish: examProps?.timeFinish ?? 30,
     description: examProps?.description ?? '',
   });
   const [listQuestions, setListQuestions] = useState<IQuestionRequest[]>(
@@ -35,11 +44,16 @@ export default function ExamDetailSection({ examProps }: IProps) {
       }),
     ) ?? [],
   );
-  const [currentOrder, setCurrentOrder] = useState<number>(0);
+  const [currentOrder, setCurrentOrder] = useState<number>(
+    STARTED_QUESTION_DEFAULT,
+  );
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const currentQuestion = useMemo(() => {
+  const currentQuestion = useMemo((): IQuestionRequest | null => {
     if (!listQuestions.length) return null;
-    return listQuestions?.find((question) => question.order === currentOrder);
+    return (
+      listQuestions?.find((question) => question.order === currentOrder) ?? null
+    );
   }, [listQuestions, currentOrder]);
 
   const handleAddNewQuestion = () => {
@@ -51,6 +65,126 @@ export default function ExamDetailSection({ examProps }: IProps) {
     };
     setListQuestions([...listQuestions, newQuestion]);
     setCurrentOrder(newQuestion.order);
+  };
+
+  const maxOrderQuestion = useMemo(() => {
+    return Math.max(...listQuestions.map((q) => q.order));
+  }, [listQuestions]);
+
+  const handleUpdateNumberQuestion = (
+    question: IQuestionRequest,
+    index: number,
+  ): IQuestionRequest => {
+    return {
+      ...question,
+      order: index + 1,
+    };
+  };
+
+  const nextMultiAnswer: IOptionsLocal = React.useMemo(() => {
+    return {
+      id: currentQuestion?.options?.length
+        ? currentQuestion?.options?.length + 1
+        : 1,
+      option: '',
+    };
+  }, [currentQuestion?.options?.length]);
+
+  const handleAddNewOptionAnswer = () => {
+    if (!currentQuestion) return;
+    const newQuestion: IQuestionRequest = {
+      ...currentQuestion!,
+      options: currentQuestion?.options?.length
+        ? [...currentQuestion.options, nextMultiAnswer]
+        : [nextMultiAnswer],
+    };
+    const updatedListQuestions = listQuestions?.map((question) => {
+      return question.order === currentOrder ? newQuestion : question;
+    });
+    setListQuestions(updatedListQuestions);
+  };
+
+  const handleUpdateOptionAnswer = (
+    id: number,
+    value: string,
+    isCorrectAnswer = false,
+  ) => {
+    const updatedQuestion: IQuestionRequest = {
+      ...currentQuestion!,
+      correctAnswer: isCorrectAnswer
+        ? value
+        : currentQuestion?.correctAnswer ?? '',
+      options:
+        currentQuestion?.options.map((option) =>
+          option.id === id ? { ...option, option: value } : option,
+        ) ?? [],
+    };
+    const updatedListQuestions = listQuestions?.map((question) => {
+      return question.order === currentOrder ? updatedQuestion : question;
+    });
+    setListQuestions(updatedListQuestions);
+  };
+  const handleUpdateCorrectAnswer = (value: string) => {
+    const updatedQuestion: IQuestionRequest = {
+      ...currentQuestion!,
+      correctAnswer: value,
+    };
+    const updatedListQuestions = listQuestions?.map((question) => {
+      return question.order === currentOrder ? updatedQuestion : question;
+    });
+    setListQuestions(updatedListQuestions);
+  };
+
+  const handleDeleteOptionAnswer = (id: number) => {
+    const updatedQuestion: IQuestionRequest = {
+      ...currentQuestion!,
+      options:
+        currentQuestion?.options
+          .filter((option) => option.id !== id)
+          .map((op, index) => ({
+            id: index + 1,
+            option: op.option,
+          })) ?? [],
+    };
+    const updatedListQuestions = listQuestions?.map((question) => {
+      return question.order === currentOrder ? updatedQuestion : question;
+    });
+    setListQuestions(updatedListQuestions);
+  };
+
+  const handleSubmit = async () => {
+    if (!(examInfo.name && examInfo.level && examInfo.timeFinish)) {
+      toast.error(
+        'Please enter exam information before submitting (including name, level, time limit)',
+      );
+      return;
+    }
+    if (!listQuestions.length) {
+      toast.error('Please add at least one question before submitting');
+      return;
+    }
+    try {
+      setLoading(true);
+      const data = {
+        name: examInfo.name,
+        level: examInfo.level,
+        timeFinish: examInfo.timeFinish,
+        description: examInfo.description,
+        questions: listQuestions.map((question) => ({
+          order: question.order,
+          content: question.content,
+          options: question.options.map((option) => option.option),
+          correctAnswer: question.correctAnswer,
+        })),
+      };
+      const rs = examProps?.id
+        ? await examService.updateExam(examProps?.id, data)
+        : await examService.createExam(data);
+      navigate(-1);
+      toast.success(rs.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -123,6 +257,19 @@ export default function ExamDetailSection({ examProps }: IProps) {
               variant="solid"
               color="danger"
               shape="default"
+              onClick={() => {
+                const updatedListQuestions = listQuestions
+                  .filter(
+                    (question) => question.order !== currentQuestion.order,
+                  )
+                  .map(handleUpdateNumberQuestion);
+                setCurrentOrder(
+                  updatedListQuestions.length > 0
+                    ? updatedListQuestions[0].order
+                    : STARTED_QUESTION_DEFAULT,
+                );
+                setListQuestions(updatedListQuestions);
+              }}
               icon={<DeleteOutlined />}
             />
           </div>
@@ -130,39 +277,124 @@ export default function ExamDetailSection({ examProps }: IProps) {
             <span className="text-lg font-semibold">Content of exam</span>
             <Input
               size="large"
-              value={examInfo?.name}
+              value={currentQuestion.content}
               onChange={(e) => {
-                setExamInfo((pre) => ({ ...pre, name: e.target.value }));
+                setListQuestions((pre) => {
+                  const updatedQuestion = pre.map((item) => {
+                    if (item.order === currentQuestion.order) {
+                      return { ...item, content: e.target.value };
+                    }
+                    return item;
+                  });
+                  return updatedQuestion;
+                });
               }}
             />
           </div>
-          <div className="flex flex-col justify-start items-start space-y-1 w-full">
+          <div className="flex flex-col justify-start items-start space-y-2 w-full">
             <span className="text-lg font-semibold">Option answer</span>
-            <Button type="primary" icon={<PlusOutlined />} iconPosition="start">
+            <Visibility visibility={currentQuestion.options.length > 0}>
+              {currentQuestion.options.map((option) => (
+                <div
+                  key={option.id}
+                  className="grid grid-cols-12 gap-x-3 w-[60%] items-center justify-items-start"
+                >
+                  <Input
+                    size="large"
+                    className={`col-span-8 ${
+                      option.option === currentQuestion.correctAnswer &&
+                      'border-green-600 border-[2px]'
+                    }`}
+                    value={option.option}
+                    onChange={(e) => {
+                      handleUpdateOptionAnswer(
+                        option.id,
+                        e.target.value,
+                        option.option === currentQuestion.correctAnswer,
+                      );
+                    }}
+                  />
+                  <Button
+                    variant="solid"
+                    className="col-span-1"
+                    color="danger"
+                    shape="default"
+                    onClick={() => {
+                      handleDeleteOptionAnswer(option.id);
+                    }}
+                    icon={<DeleteOutlined />}
+                  />
+                  <div className="col-span-3 flex flex-row justify-between items-center space-x-2">
+                    <Radio
+                      value={option.option}
+                      checked={option.option === currentQuestion.correctAnswer}
+                      onChange={(e) => {
+                        handleUpdateCorrectAnswer(e.target.value);
+                      }}
+                    />
+                    <Visibility
+                      visibility={
+                        option.option === currentQuestion.correctAnswer
+                      }
+                    >
+                      <span className="text-base font-semibold text-green-600">
+                        Correct answer
+                      </span>
+                    </Visibility>
+                  </div>
+                </div>
+              ))}
+            </Visibility>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              iconPosition="start"
+              onClick={handleAddNewOptionAnswer}
+            >
               Add new option answer
             </Button>
           </div>
         </div>
       )}
-      {}
-      <div className="w-full flex justify-between items-center">
-        <Button
-          type="primary"
-          icon={<ArrowLeftOutlined />}
-          iconPosition="start"
-          onClick={handleAddNewQuestion}
-        >
-          Previous question
-        </Button>
-        <Button
-          type="primary"
-          icon={<ArrowRightOutlined />}
-          iconPosition="end"
-          onClick={handleAddNewQuestion}
-        >
-          Next question
-        </Button>
-      </div>
+      <Visibility
+        visibility={
+          currentOrder > STARTED_QUESTION_DEFAULT ||
+          currentOrder < maxOrderQuestion
+        }
+      >
+        <div className="w-full flex justify-between items-center">
+          <Visibility
+            visibility={currentOrder > STARTED_QUESTION_DEFAULT}
+            boundaryComponent
+          >
+            <Button
+              type="primary"
+              icon={<ArrowLeftOutlined />}
+              iconPosition="start"
+              onClick={() => {
+                setCurrentOrder(currentOrder - 1);
+              }}
+            >
+              Previous question
+            </Button>
+          </Visibility>
+          <Visibility
+            visibility={currentOrder < maxOrderQuestion}
+            boundaryComponent
+          >
+            <Button
+              type="primary"
+              icon={<ArrowRightOutlined />}
+              iconPosition="end"
+              onClick={() => {
+                setCurrentOrder(currentOrder + 1);
+              }}
+            >
+              Next question
+            </Button>
+          </Visibility>
+        </div>
+      </Visibility>
       <Button
         type="primary"
         icon={<PlusOutlined />}
@@ -172,13 +404,20 @@ export default function ExamDetailSection({ examProps }: IProps) {
         Add new question
       </Button>
       <div className="flex flex-row w-full space-x-5">
-        <Button type="default" color="default">
+        <Button
+          type="default"
+          color="default"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
           Cancel
         </Button>
-        <Button type="primary" color="primary">
+        <Button type="primary" color="primary" onClick={handleSubmit}>
           Submit
         </Button>
       </div>
+      <GeneralLoading isLoading={loading} />
     </div>
   );
 }

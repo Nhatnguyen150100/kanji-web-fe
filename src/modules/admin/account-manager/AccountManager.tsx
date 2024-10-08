@@ -135,7 +135,7 @@ export default function AccountManager() {
   return (
     <div className="flex flex-col justify-start items-center space-y-5">
       <h1 className="font-bold text-3xl">Account Manager</h1>
-      <div className="flex flex-row justify-between items-center w-full">
+      <div className="flex flex-col justify-start items-start w-full space-y-3">
         <BaseSearch
           value={query.nameLike!}
           placeholder="Input search text"
@@ -149,6 +149,7 @@ export default function AccountManager() {
           }}
           onSearch={() => handleGetAccountList()}
         />
+        <h1 className="font-bold text-xl">Totals account: {query.total}</h1>
       </div>
       {loading ? (
         <Spin />
