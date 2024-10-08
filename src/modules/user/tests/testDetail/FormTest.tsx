@@ -16,6 +16,11 @@ import { ILevelKanji } from '../../../../types/kanji.types';
 import Visibility from '../../../../components/base/visibility';
 import CountdownTimer from '../../../../components/base/CountDownTimer';
 import { calculateScore } from '../../../../utils/functions/on-calculate-score';
+import { testService } from '../../../../services';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../lib/store';
+import { toast } from 'react-toastify';
+import GeneralLoading from '../../../../components/base/GeneralLoading';
 
 interface IProps {
   examProps: IExamDetail;
@@ -29,6 +34,7 @@ interface IAnswer {
 const STARTED_QUESTION_DEFAULT = 1;
 
 export default function FormTest({ examProps }: IProps) {
+  const user = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const listQuestions = useMemo(() => {
     return (
@@ -43,6 +49,7 @@ export default function FormTest({ examProps }: IProps) {
 
   const [listAnswer, setListAnswer] = useState<IAnswer[]>([]);
   const [isStartTest, setIsStartTest] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [score, setScore] = useState<number>();
 
   const handleAddOrEditAnswer = (id: string, answer: string) => {
@@ -67,20 +74,32 @@ export default function FormTest({ examProps }: IProps) {
     return Math.max(...listQuestions.map((q) => q.order));
   }, [listQuestions]);
 
-  const handleCalculateScore = () => {
+  const handleCalculateScore = (): number => {
     const totalCorrectAnswer = listQuestions
       .map((question) => {
         const answer = listAnswer.find((answer) => answer.id === question.id);
         if (answer?.answer === question.correctAnswer) return question;
       })
       .filter((answer) => answer?.id);
-    setScore(totalCorrectAnswer.length);
+    return totalCorrectAnswer.length;
   };
 
-  const handleOk = () => {
-    setCurrentOrder(STARTED_QUESTION_DEFAULT);
-    setIsStartTest(false);
-    handleCalculateScore();
+  const handleOk = async () => {
+    const score = handleCalculateScore();
+    try {
+      setLoading(true);
+      const rs = await testService.saveScore({
+        idUser: user.id,
+        idExam: examProps.id,
+        score,
+      })
+      setCurrentOrder(STARTED_QUESTION_DEFAULT);
+      setIsStartTest(false);
+      setScore(score);
+      toast.success(rs.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = () => {
@@ -93,7 +112,9 @@ export default function FormTest({ examProps }: IProps) {
         top: '50%',
         transform: 'translateY(-50%)',
       },
-      onOk: handleOk,
+      onOk: () => {
+        handleOk();
+      },
     });
   };
 
@@ -252,6 +273,7 @@ export default function FormTest({ examProps }: IProps) {
           </Button>
         </Visibility>
       </div>
+      <GeneralLoading isLoading={loading} />
     </div>
   );
 }

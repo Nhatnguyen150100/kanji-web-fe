@@ -12,6 +12,7 @@ import { Link, useLocation, useNavigate, useRoutes } from 'react-router-dom';
 import DEFINE_ROUTERS, {
   DEFINE_LIST_ROUTES_USER,
 } from '../../constants/routers-mapper';
+import isChildUrl from '../../utils/functions/check-active-router';
 
 export default function TheHeader() {
   const navigate = useNavigate();
@@ -142,7 +143,7 @@ export default function TheHeader() {
                               key={subRoute.name}
                               variant="text"
                               color={`${
-                                subRoute.route === location.pathname
+                                isChildUrl(subRoute.route, location.pathname)
                                   ? 'primary'
                                   : 'default'
                               }`}
@@ -160,8 +161,8 @@ export default function TheHeader() {
                         <Link
                           to={item.route}
                           className={`block py-2 px-4 mx-8 text-base font-medium text-gray-800 border-b border-gray-100 hover:bg-gray-50 ${
-                            item.subRoutes.some(
-                              (route) => route.route === location.pathname,
+                            item.subRoutes.some((route) =>
+                              isChildUrl(route.route, location.pathname),
                             )
                               ? '!text-white font-bold'
                               : ''
