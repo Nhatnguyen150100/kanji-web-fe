@@ -21,6 +21,7 @@ const DEFINE_ROUTERS = {
   listKanjis: '/dashboard/list-kanjis',
   kanjiDetail: '/dashboard/list-kanjis/:kanjiId',
   tests: '/dashboard/tests',
+  testsDetail: '/dashboard/tests/:testsId',
   levelN5: '/dashboard/level-N5',
   levelN4: '/dashboard/level-N4',
   levelN3: '/dashboard/level-N3',

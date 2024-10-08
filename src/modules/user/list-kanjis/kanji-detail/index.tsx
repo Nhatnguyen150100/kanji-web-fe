@@ -91,7 +91,7 @@ export default function KanjiDetail() {
               </div>
               <div className="flex flex-col justify-start items-start space-y-3">
                 <div className="flex flex-row justify-start items-start">
-                  <span className="text-xl font-bold text-gray-800">
+                  <span className="text-xl font-bold text-gray-800 me-3">
                     Level:
                   </span>
                   {onChooseLevelKanji(kanji?.level)}

@@ -23,6 +23,7 @@ import DashBoard from '../modules/admin/dashboard/DashBoard';
 import ExamManager from '../modules/admin/exam-manager/ExamManager';
 import ExamDetail from '../modules/admin/exam-manager/ExamDetail';
 import NewExam from '../modules/admin/exam-manager/NewExam';
+import TestDetail from '../modules/user/tests/testDetail/TestDetail';
 
 const router = createBrowserRouter([
   {
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: DEFINE_ROUTERS.tests,
         element: <TestsPage />,
+      },
+      {
+        path: DEFINE_ROUTERS.testsDetail,
+        element: <TestDetail />,
       },
       {
         path: DEFINE_ROUTERS.process,

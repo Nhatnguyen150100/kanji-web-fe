@@ -59,7 +59,7 @@ export default function LevelN5Page({}: Props) {
             onSearch={() => handleGetListKanji()}
           />
           <div className="flex flex-row justify-start items-center">
-            <span className="text-xl font-bold text-gray-800">Level:</span>
+            <span className="text-xl font-bold text-gray-800 me-3">Level:</span>
             {onChooseLevelKanji('N5')}
           </div>
           <div className="flex flex-row justify-center items-start space-x-4 flex-wrap min-h-[400px]">
