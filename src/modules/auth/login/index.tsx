@@ -61,14 +61,24 @@ export default function LoginPage() {
                     >
                       <div className="px-4 py-6 text-white md:mx-6 md:p-12">
                         <h4 className="mb-6 text-xl font-semibold">
-                          We are more than just a company
+                          We are more than just a website to learn kanji
                         </h4>
                         <p className="text-sm">
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat.
+                          Welcome to the Kanji Learning Website! Our platform is
+                          dedicated to helping learners master Kanji, the
+                          intricate characters used in the Japanese writing
+                          system. With a user-friendly interface, interactive
+                          lessons, and a variety of resources, we aim to make
+                          your Kanji learning journey enjoyable and effective.
+                          Explore our extensive database of Kanji characters,
+                          complete with meanings, readings, and example
+                          sentences. Engage in quizzes and practice exercises to
+                          reinforce your knowledge, and track your progress as
+                          you advance through different levels. Whether you are
+                          a beginner or looking to refresh your skills, our
+                          website provides the tools and support you need to
+                          succeed in mastering Kanji. Join us today and take
+                          your first step towards fluency in Japanese!
                         </p>
                       </div>
                     </div>
