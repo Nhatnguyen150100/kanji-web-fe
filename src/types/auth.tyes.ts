@@ -18,3 +18,9 @@ export interface IResponseLogin {
   updatedAt: string;
   accessToken: string;
 }
+
+export interface IChangePass {
+  userId: string,
+  oldPassword: string,
+  newPassword: string,
+}

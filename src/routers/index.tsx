@@ -24,6 +24,9 @@ import ExamManager from '../modules/admin/exam-manager/ExamManager';
 import ExamDetail from '../modules/admin/exam-manager/ExamDetail';
 import NewExam from '../modules/admin/exam-manager/NewExam';
 import TestDetail from '../modules/user/tests/testDetail/TestDetail';
+import ChangePassword from '../modules/user/changePassword';
+import ForgotPassword from '../modules/auth/forgot-password';
+import ResetPassword from '../modules/auth/reset-password';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +37,14 @@ const router = createBrowserRouter([
   {
     path: DEFINE_ROUTERS.auth.login,
     element: <LoginPage />,
+  },
+  {
+    path: DEFINE_ROUTERS.auth.forgotPassword,
+    element: <ForgotPassword />,
+  },
+  {
+    path: DEFINE_ROUTERS.auth.resetPassword,
+    element: <ResetPassword />,
   },
   {
     path: DEFINE_ROUTERS.auth.register,
@@ -84,6 +95,10 @@ const router = createBrowserRouter([
       {
         path: DEFINE_ROUTERS.profile,
         element: <Profile />,
+      },
+      {
+        path: DEFINE_ROUTERS.changePassword,
+        element: <ChangePassword />,
       },
       {
         path: DEFINE_ROUTERS.kanjiDetail,

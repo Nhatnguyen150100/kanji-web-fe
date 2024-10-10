@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../lib/store';
 import { Avatar, Button, Divider, Popover } from 'antd';
 import {
+  EditOutlined,
   LogoutOutlined,
   ProfileOutlined,
   UserOutlined,
@@ -42,6 +43,15 @@ export default function TheHeader() {
     return (
       <>
         <div className="flex flex-col justify-start items-center min-w-[160px]">
+          <Button
+            variant="text"
+            color="default"
+            className="text-md text-gray-800 w-full flex justify-start font-medium border-none"
+            onClick={() => navigate(DEFINE_ROUTERS.changePassword)}
+          >
+            <EditOutlined /> Change password
+          </Button>
+          <Divider variant="solid" className="my-2" />
           <Button
             variant="text"
             color="default"

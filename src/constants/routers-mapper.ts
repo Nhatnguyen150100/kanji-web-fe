@@ -3,6 +3,8 @@ const _prefixSegment = '/auth';
 const authRouter = {
   login: `${_prefixSegment}/login`,
   register: `${_prefixSegment}/register`,
+  forgotPassword: `${_prefixSegment}/forgotPassword`,
+  resetPassword: `${_prefixSegment}/reset-password/:token`,
 };
 
 const DEFINE_ROUTERS = {
@@ -18,6 +20,7 @@ const DEFINE_ROUTERS = {
   auth: authRouter,
   user: '/dashboard',
   profile: '/dashboard/profile',
+  changePassword: '/dashboard/change-password',
   listKanjis: '/dashboard/list-kanjis',
   kanjiDetail: '/dashboard/list-kanjis/:kanjiId',
   tests: '/dashboard/tests',

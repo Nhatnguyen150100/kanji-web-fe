@@ -8,6 +8,7 @@ import cookiesStore from '../../../plugins/cookiesStore';
 import { RootState } from '../../../lib/store';
 import { Navigate, useNavigate } from 'react-router-dom';
 import DEFINE_ROUTERS from '../../../constants/routers-mapper';
+import Link from 'antd/es/typography/Link';
 
 export default function LoginPage() {
   const dispatch = useDispatch();
@@ -111,7 +112,7 @@ export default function LoginPage() {
                               }));
                             }}
                           ></Input>
-                          <Input
+                          <Input.Password
                             type="password"
                             placeholder="Password"
                             className="mb-4"
@@ -122,7 +123,7 @@ export default function LoginPage() {
                                 password: e.target.value,
                               }));
                             }}
-                          ></Input>
+                          ></Input.Password>
                           <div className="mb-12 pb-1 pt-1 text-center">
                             <button
                               disabled={loading}
@@ -136,8 +137,10 @@ export default function LoginPage() {
                             >
                               Log in
                             </button>
+                            <div className="flex justify-end">
+                              <Link href={DEFINE_ROUTERS.auth.forgotPassword} >Forgot your password?</Link>
+                            </div>
                           </div>
-
                           {/* <!--Register button--> */}
                           <div className="flex items-center justify-between pb-6">
                             <p className="mb-0 mr-2">Don't have an account?</p>

@@ -1,5 +1,5 @@
 import axiosRequest from '../plugins/request';
-import { ILogin, IResponseLogin } from '../types/auth.tyes';
+import { IChangePass, ILogin, IResponseLogin } from '../types/auth.tyes';
 import { IBaseResponse } from '../types/response.types';
 
 class AuthService {
@@ -17,6 +17,52 @@ class AuthService {
   public async register(data: ILogin): Promise<IBaseResponse<any>> {
     try {
       const rs = await axiosRequest.post(`${this._prefixURL}/register`, data);
+      return Promise.resolve(rs.data);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  public async changePassword(data: IChangePass): Promise<IBaseResponse<any>> {
+    try {
+      const rs = await axiosRequest.post(
+        `${this._prefixURL}/change-password`,
+        data,
+      );
+      return Promise.resolve(rs.data);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  public async resetPasswordRequest(
+    email: string,
+  ): Promise<IBaseResponse<any>> {
+    try {
+      const rs = await axiosRequest.post(
+        `${this._prefixURL}/reset-password-request`,
+        {
+          email,
+        },
+      );
+      return Promise.resolve(rs.data);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  public async resetPassword(
+    token: string,
+    password: string,
+  ): Promise<IBaseResponse<any>> {
+    try {
+      const rs = await axiosRequest.post(
+        `${this._prefixURL}/reset-password`,
+        {
+          token,
+          password,
+        },
+      );
       return Promise.resolve(rs.data);
     } catch (error) {
       return Promise.reject(error);
