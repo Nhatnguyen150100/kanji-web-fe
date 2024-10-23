@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { kanjiService } from '../../../services';
 import { IKanji, IQueryKanji } from '../../../types/kanji.types';
-import { Empty, Spin } from 'antd';
+import { Empty, Pagination, Spin } from 'antd';
 import BaseDisplayKanji from '../../../components/base/BaseDisplayKanji';
 import _ from 'lodash';
 import BaseSearch from '../../../components/base/BaseSearch';
 import { useNavigate } from 'react-router-dom';
-import DEFINE_ROUTERS from '../../../constants/routers-mapper';
 
 type Props = {};
 
@@ -25,6 +24,7 @@ export default function ListKanjis({}: Props) {
       setLoading(true);
       const rs = await kanjiService.listKanji(queryParam);
       setListKanji(rs.data.content);
+      setQuery({ ...queryParam, total: rs.data.totalCount });
     } finally {
       setLoading(false);
     }
@@ -50,7 +50,7 @@ export default function ListKanjis({}: Props) {
             onHandleChange={(value) => {
               if (!value)
                 handleGetListKanji({
-                  page: query.page,
+                  page: 1,
                   limit: query.limit,
                 });
               setQuery({ ...query, nameLike: value });
@@ -66,6 +66,23 @@ export default function ListKanjis({}: Props) {
                 onClick={(kanji) => handleClickKanji(kanji)}
               />
             ))}
+          </div>
+          <div className="w-full justify-center items-center">
+            <Pagination
+              total={query.total}
+              pageSize={query.limit}
+              current={query.page}
+              onChange={(page) => {
+                setQuery({
+                  ...query,
+                  page,
+                });
+                handleGetListKanji({
+                  ...query,
+                  page,
+                });
+              }}
+            />
           </div>
         </div>
       )}

@@ -188,11 +188,11 @@ export default function TheHeader() {
                   <li key={item.name}>
                     <Link
                       to={item.route}
-                      className={`block py-2 px-4 mx-8 text-base font-medium text-gray-800 border-b border-gray-100 hover:bg-gray-50 ${
+                      className={`block py-2 px-4 mx-8 text-base font-medium text-white border-b border-gray-100 hover:bg-gray-50 ${
                         item.route === location.pathname
                           ? '!text-white font-bold'
                           : ''
-                      } lg:border-0 lg:hover:text-primary-700 lg:p-0 text-gray-400 lg:hover:text-white hover:bg-gray-700 hover:text-white lg:hover:bg-transparent border-gray-700`}
+                      } lg:border-0 lg:hover:text-primary-700 lg:p-0 text-gray-400 lg:hover:text-white  hover:text-white lg:hover:bg-transparent border-gray-700`}
                     >
                       {item.name}
                     </Link>
