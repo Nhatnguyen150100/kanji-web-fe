@@ -67,8 +67,9 @@ export default function ListKanjis({}: Props) {
               />
             ))}
           </div>
-          <div className="w-full justify-center items-center">
+          <div className="w-full">
             <Pagination
+              align="center"
               total={query.total}
               pageSize={query.limit}
               current={query.page}

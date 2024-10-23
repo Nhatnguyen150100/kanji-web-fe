@@ -16,7 +16,7 @@ const routes = [
     name: 'Dashboard',
     icon: (
       <svg
-        className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+        className="flex-shrink-0 w-5 h-5 transition duration-75 text-gray-400 group-hover:text-white"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"
@@ -31,21 +31,21 @@ const routes = [
     path: DEFINE_ROUTERS.kanjiManager,
     name: 'Kanjis',
     icon: (
-      <EditOutlined className="text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+      <EditOutlined className="transition duration-75 text-gray-400 group-hover:text-white" />
     ),
   },
   {
     path: DEFINE_ROUTERS.accountManager,
     name: 'Account',
     icon: (
-      <UnorderedListOutlined className="text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+      <UnorderedListOutlined className="transition duration-75 text-gray-400 group-hover:text-white" />
     ),
   },
   {
     path: DEFINE_ROUTERS.examManager,
     name: 'Exam',
     icon: (
-      <FormOutlined className="text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+      <FormOutlined className="transition duration-75 text-gray-400 group-hover:text-white" />
     ),
   },
   // {
@@ -53,7 +53,7 @@ const routes = [
   //   name: 'Products',
   //   icon: (
   //     <svg
-  //       className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+  //       className="flex-shrink-0 w-5 h-5 transition duration-75 text-gray-400 group-hover:text-white"
   //       aria-hidden="true"
   //       xmlns="http://www.w3.org/2000/svg"
   //       fill="currentColor"
@@ -95,13 +95,13 @@ const Sidebar = () => {
       className="top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar"
     >
-      <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+      <div className="h-full px-3 py-4 overflow-y-auto bg-gray-800">
         <ul className="space-y-2 font-medium">
           {routes.map((route) => (
             <li key={route.path}>
               <Link
                 to={route.path}
-                className={`flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${
+                className={`flex items-center p-2 rounded-lg text-white hover:bg-gray-700 group ${
                   isChildUrl(route.path, location.pathname) &&
                   'bg-gray-700 text-white'
                 }`}
@@ -120,11 +120,11 @@ const Sidebar = () => {
           ))}
           <li>
             <div
-              className={`flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group hover:cursor-pointer`}
+              className={`flex items-center p-2 rounded-lg text-white hover:bg-gray-700 group hover:cursor-pointer`}
               onClick={handleLogOut}
             >
               <svg
-                className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                className="flex-shrink-0 w-5 h-5 transition duration-75 text-gray-400 group-hover:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

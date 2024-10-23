@@ -83,7 +83,7 @@ export default function LoginAdminPage() {
                                 }));
                               }}
                             ></Input>
-                            <Input
+                            <Input.Password
                               type="password"
                               placeholder="Password"
                               className="mb-4"
@@ -94,7 +94,7 @@ export default function LoginAdminPage() {
                                   password: e.target.value,
                                 }));
                               }}
-                            ></Input>
+                            ></Input.Password>
                             <div className="mb-12 pb-1 pt-1 text-center">
                               <button
                                 disabled={loading}

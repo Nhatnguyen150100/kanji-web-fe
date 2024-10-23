@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IKanji, IQueryKanji } from '../../../../types/kanji.types';
 import { kanjiService } from '../../../../services';
-import { Empty, Spin } from 'antd';
+import { Empty, Pagination, Spin } from 'antd';
 import BaseSearch from '../../../../components/base/BaseSearch';
 import BaseDisplayKanji from '../../../../components/base/BaseDisplayKanji';
 import { onChooseLevelKanji } from '../../../../utils/functions/on-choose-level-kanji';
@@ -71,6 +71,24 @@ export default function LevelN2Page({}: Props) {
                 onClick={(kanji) => handleClickKanji(kanji)}
               />
             ))}
+          </div>
+          <div className="w-full">
+            <Pagination
+              align="center"
+              total={query.total}
+              pageSize={query.limit}
+              current={query.page}
+              onChange={(page) => {
+                setQuery({
+                  ...query,
+                  page,
+                });
+                handleGetListKanji({
+                  ...query,
+                  page,
+                });
+              }}
+            />
           </div>
         </div>
       )}
